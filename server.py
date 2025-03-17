@@ -45,7 +45,7 @@ if __name__ == '__main__':
         [123, 183, 164, 1]
     ]
 
-    server = Server('127.0.0.1', 8000, data)
+    server = Server('127.0.0.1', 8080, data)
     with server.run():
         while (row := input('Введите "stop" для завершения работы сервера: ')) != 'stop':
             ...
