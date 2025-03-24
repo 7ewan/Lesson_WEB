@@ -9,12 +9,19 @@ from data.users import User
 from data import db_session
 from data.jobs import Jobs
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
+from jobs_api import blueprint
+from flask_restful import Api
+from user_resource import UserResource, UserListResourse
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(
     days=365
 )
+
+api = Api(app)
+api.add_resource(UserResource, '/api/v2/users/<int:user_id>')
+api.add_resource(UserListResourse, '/api/v2/users')
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -181,4 +188,5 @@ def jobs():
 
 if __name__ == '__main__':
     db_session.global_init('database/mars_explorer.db')
+    app.register_blueprint(blueprint)
     app.run(host='127.0.0.1', port=8080)
